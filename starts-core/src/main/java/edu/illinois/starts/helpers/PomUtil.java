@@ -10,8 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import edu.illinois.starts.constants.StartsConstants;
+import edu.illinois.starts.util.Logger;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -22,6 +24,12 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  */
 public class PomUtil {
     static final String MIN_SUREFIRE_VERSION = "2.13";
+    private static final Logger LOGGER = Logger.getGlobal();
+    private static boolean sfVersionRequirementNotMet = false;
+
+    public static boolean isSFRequirementMet() {
+        return !sfVersionRequirementNotMet;
+    }
 
     public static String extractParamValue(Plugin plugin, String elem) throws MojoExecutionException {
         String value = null;
@@ -64,9 +72,13 @@ public class PomUtil {
         }
 
         String version = sfPlugin.getVersion();
-        if (MIN_SUREFIRE_VERSION.compareTo(version) > 0) {
-            throw new MojoExecutionException("Unsupported Surefire version: " + version
-                    + ". Use version " + MIN_SUREFIRE_VERSION + " and above.");
+        if (MIN_SUREFIRE_VERSION.compareTo(version) > 0 && !sfVersionRequirementNotMet) {
+            // issue 63
+            //throw new MojoExecutionException("Unsupported Surefire version: " + version
+              //      + ". Use version " + MIN_SUREFIRE_VERSION + " and above.");
+            sfVersionRequirementNotMet = true;
+            LOGGER.log(Level.WARNING, "Please update your Surefire version: " + version
+                 + ". Use version " + MIN_SUREFIRE_VERSION + " and above.");
         }
     }
 

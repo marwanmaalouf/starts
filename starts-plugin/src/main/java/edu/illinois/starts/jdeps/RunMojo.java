@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import edu.illinois.starts.constants.StartsConstants;
+import edu.illinois.starts.helpers.PomUtil;
 import edu.illinois.starts.helpers.Writer;
 import edu.illinois.starts.maven.AgentLoader;
 import edu.illinois.starts.util.Logger;
@@ -68,6 +69,10 @@ public class RunMojo extends DiffMojo implements StartsConstants {
     @Parameter(property = "writeChangedClasses", defaultValue = "false")
     protected boolean writeChangedClasses;
 
+    @Parameter(property = "sfFlagRaised", defaultValue = "false")
+    protected boolean sfFlagRaised;
+
+
     protected Set<String> nonAffectedTests;
     protected Set<String> changedClasses;
     protected List<Pair> jarCheckSums = null;
@@ -79,6 +84,7 @@ public class RunMojo extends DiffMojo implements StartsConstants {
         logger = Logger.getGlobal();
         long start = System.currentTimeMillis();
         setIncludesExcludes();
+        sfFlagRaised = !(PomUtil.isSFRequirementMet());
         run();
         Set<String> allTests = new HashSet<>(getTestClasses(CHECK_IF_ALL_AFFECTED));
         if (writeNonAffected || logger.getLoggingLevel().intValue() <= Level.FINEST.intValue()) {
@@ -96,7 +102,10 @@ public class RunMojo extends DiffMojo implements StartsConstants {
     protected void run() throws MojoExecutionException {
         String cpString = Writer.pathToString(getSureFireClassPath().getClassPath());
         List<String> sfPathElements = getCleanClassPath(cpString);
-        if (!isSameClassPath(sfPathElements) || !hasSameJarChecksum(sfPathElements)) {
+        if (sfFlagRaised) {
+            dynamicallyUpdateExcludes(new ArrayList<String>());
+            nonAffectedTests = new HashSet<>();
+        } else if (!isSameClassPath(sfPathElements) || !hasSameJarChecksum(sfPathElements)) {
             // Force retestAll because classpath changed since last run
             // don't compute changed and non-affected classes
             dynamicallyUpdateExcludes(new ArrayList<String>());
