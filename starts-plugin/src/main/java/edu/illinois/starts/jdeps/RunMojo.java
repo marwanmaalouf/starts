@@ -69,15 +69,14 @@ public class RunMojo extends DiffMojo implements StartsConstants {
     @Parameter(property = "writeChangedClasses", defaultValue = "false")
     protected boolean writeChangedClasses;
 
-    @Parameter(property = "sfFlagRaised", defaultValue = "false")
-    protected boolean sfFlagRaised;
-
 
     protected Set<String> nonAffectedTests;
     protected Set<String> changedClasses;
     protected List<Pair> jarCheckSums = null;
 
     private Logger logger;
+    private boolean sfFlagRaised;
+
 
     public void execute() throws MojoExecutionException {
         Logger.getGlobal().setLoggingLevel(Level.parse(loggingLevel));
@@ -102,17 +101,16 @@ public class RunMojo extends DiffMojo implements StartsConstants {
     protected void run() throws MojoExecutionException {
         String cpString = Writer.pathToString(getSureFireClassPath().getClassPath());
         List<String> sfPathElements = getCleanClassPath(cpString);
-        if (sfFlagRaised) {
-            dynamicallyUpdateExcludes(new ArrayList<String>());
-            nonAffectedTests = new HashSet<>();
-        } else if (!isSameClassPath(sfPathElements) || !hasSameJarChecksum(sfPathElements)) {
+        if (!isSameClassPath(sfPathElements) || !hasSameJarChecksum(sfPathElements) || sfFlagRaised) {
             // Force retestAll because classpath changed since last run
             // don't compute changed and non-affected classes
             dynamicallyUpdateExcludes(new ArrayList<String>());
             // Make nonAffected empty so dependencies can be updated
             nonAffectedTests = new HashSet<>();
-            Writer.writeClassPath(cpString, artifactsDir);
-            Writer.writeJarChecksums(sfPathElements, artifactsDir, jarCheckSums);
+            if (!sfFlagRaised) {
+                Writer.writeClassPath(cpString, artifactsDir);
+                Writer.writeJarChecksums(sfPathElements, artifactsDir, jarCheckSums);
+            }
         } else if (retestAll) {
             // Force retestAll but compute changes and affected tests
             setChangedAndNonaffected();

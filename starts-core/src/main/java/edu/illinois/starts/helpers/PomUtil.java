@@ -73,12 +73,9 @@ public class PomUtil {
 
         String version = sfPlugin.getVersion();
         if (MIN_SUREFIRE_VERSION.compareTo(version) > 0 && !sfVersionRequirementNotMet) {
-            // issue 63
-            //throw new MojoExecutionException("Unsupported Surefire version: " + version
-              //      + ". Use version " + MIN_SUREFIRE_VERSION + " and above.");
             sfVersionRequirementNotMet = true;
             LOGGER.log(Level.WARNING, "Please update your Surefire version: " + version
-                 + ". Use version " + MIN_SUREFIRE_VERSION + " and above.");
+                 + " to version " + MIN_SUREFIRE_VERSION + " and above. All tests are being run.");
         }
     }
 
