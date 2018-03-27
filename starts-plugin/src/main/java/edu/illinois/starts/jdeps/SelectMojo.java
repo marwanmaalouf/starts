@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import edu.illinois.starts.constants.StartsConstants;
+import edu.illinois.starts.helpers.PomUtil;
 import edu.illinois.starts.helpers.Writer;
 import edu.illinois.starts.util.Logger;
 import edu.illinois.starts.util.Pair;
@@ -53,7 +54,7 @@ public class SelectMojo extends DiffMojo implements StartsConstants {
         Pair<Set<String>, Set<String>> data = computeChangeData(false);
         Set<String> nonAffectedTests = data == null ? new HashSet<String>() : data.getKey();
         affectedTests.removeAll(nonAffectedTests);
-        if (allTests.equals(nonAffectedTests)) {
+        if (allTests.equals(nonAffectedTests) && !PomUtil.isSFRequirementMet()) {
             logger.log(Level.INFO, STARS_RUN_STARS);
             logger.log(Level.INFO, NO_TESTS_ARE_SELECTED_TO_RUN);
         }
