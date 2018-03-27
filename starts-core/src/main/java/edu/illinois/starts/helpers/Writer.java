@@ -38,6 +38,7 @@ public class Writer implements StartsConstants {
     private static final Logger LOGGER = Logger.getGlobal();
 
     public static void writeToFile(Collection col, String filename, String artifactsDir) {
+        // MM: added to test plugin
         String outFilename = artifactsDir + File.separator + filename;
         writeToFile(col, outFilename);
     }
