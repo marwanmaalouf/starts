@@ -5,6 +5,7 @@
 STARTS is a static class-level regression test selection tool
 for Maven-based Java programs.
 
+
 ## Prerequisites
 
 1. Java 1.8
