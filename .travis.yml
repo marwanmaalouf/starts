@@ -8,8 +8,9 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - mvn starts:run; mvn starts:starts
+    - cp -r $HOME/.cache/jdeps-cache ./; mvn starts:starts; cp -r ./jdeps-cache $HOME/.cache/
 
 cache:
     directories:
     - $HOME/.m2
+    - $HOME/.cache
