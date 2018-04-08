@@ -8,8 +8,9 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - mvn starts:starts
+    - mvn starts:starts 
     - ls -la
+    - ls -a
     
 cache:
     directories:
