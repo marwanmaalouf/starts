@@ -9,9 +9,8 @@ matrix:
 
 script:
     - mvn starts:starts 
-    - pwd
     
 cache:
     directories:
     - $HOME/.m2
-    - $HOME/build/marwanmaalouf/starts/.starts
+    - /home/travis/build/marwanmaalouf/starts/.starts
