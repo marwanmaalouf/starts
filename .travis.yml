@@ -8,7 +8,7 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - mvn starts:starts -DgCache=$HOME/.cache; ls $HOME/build/marwanmaalouf/build $HOME/build/marwanmaalouf/cache $HOME/build/marwanmaalouf/store;
+    - mvn starts:starts -DgCache=$HOME/.cache; ls $HOME/build/marwanmaalouf/;
 
 cache:
     directories:
