@@ -8,12 +8,8 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - cp -y $HOME/starts_cache/.starts ./
-    - mvn starts:starts 
-    - ls -a .starts
-    - cp -y .starts $HOME/starts_cache/
-    
+    - mvn starts:starts     
 cache:
     directories:
     - $HOME/.m2
-    - $HOME/starts_cache
+    - marwanmaalouf/starts/.starts
