@@ -9,9 +9,9 @@ matrix:
 
 script:
     - mvn starts:starts 
-    - ls -a /home/travis/build/marwanmaalouf/starts/.starts
+    - ls -a .starts
     
 cache:
     directories:
     - $HOME/.m2
-    - $HOME/build/marwanmaalouf/starts/.starts
+    - $HOME/starts_cache
