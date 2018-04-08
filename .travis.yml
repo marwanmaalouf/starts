@@ -8,7 +8,7 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - mvn starts:starts     
+    - mvn starts:starts      
 cache:
     directories:
     - $HOME/.m2
