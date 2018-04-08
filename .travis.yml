@@ -9,8 +9,7 @@ matrix:
 
 script:
     - mvn starts:starts 
-    - ls -la
-    - ls -a
+    - pwd
     
 cache:
     directories:
