@@ -8,8 +8,8 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - mvn starts:run; mvn starts:starts
-    - ls -Ra
+    - mvn starts:starts -DstartsLogging=FINEST
+    
 cache:
     directories:
     - $HOME/.m2
