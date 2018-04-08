@@ -8,7 +8,7 @@ matrix:
       jdk: oraclejdk8
 
 script:
-    - cp -r $HOME/.cache/jdeps-cache ./; mvn starts:starts; cp -r ./jdeps-cache $HOME/.cache/
+    - mvn starts:starts -DgCache=$HOME/.cache
 
 cache:
     directories:
