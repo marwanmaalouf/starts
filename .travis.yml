@@ -14,3 +14,5 @@ cache:
     directories:
     - $HOME/.m2
     - .starts
+    - starts-core/.starts
+    - starts-plugin/.starts
