@@ -1,4 +1,4 @@
-# STARTS (*STA*tic *R*egression *T*est *S*election) Overview
+# STARTS (*STA*tic *R*egression *T*est *S*election) Overview:
 
 [![Build Status](https://travis-ci.org/marwanmaalouf/starts.svg?branch=master)](https://travis-ci.org/marwanmaalouf/starts)
 
